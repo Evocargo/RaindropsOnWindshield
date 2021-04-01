@@ -33,7 +33,10 @@ The algorithm allows to generate raindrops of three shapes : 0 - circle , 1 - eg
 
 <img width="328" alt="drop_generation" src="https://user-images.githubusercontent.com/39035996/112954529-238bc480-9147-11eb-8b14-54120373407e.png">
 
-## Example of raindrops generated on a sequence of images
+## Example of image raindrops generation
+
+<img width="806" alt="Снимок экрана 2021-04-01 в 17 41 20" src="https://user-images.githubusercontent.com/39035996/113311191-b37d6a00-9311-11eb-837d-fb86c340c529.png">
+
 
 ## Contribution
 Contributions (bug reports, bug fixes, improvements, etc.) are very welcome and should be submitted in the form of new issues and/or pull requests on GitHub.
