@@ -1,5 +1,5 @@
 # RaindropsOnWindshield
-We present a publicly available set of images containing 8190 images of which 3390 contain raindrops. Images are annotated with the binary mask representing areas with raindrops.
+We present a publicly available set of images for training and assessing vision algorithms' performance for different tasks of image artifacts detection on either camera lens or windshield. At the moment, it contains 8190 images, of which 3390 contain raindrops.
 
 ## Dataset description
 
@@ -32,6 +32,8 @@ Collecting images with a variety of raindrops is a challenging and time-consumin
 The algorithm allows to generate raindrops of three shapes : 0 - circle , 1 - egg, 2 - a combination of two Bezier curves. The egg shape is created by a combination of a circle and a semi-ellipse. Radius, coordinates of the drop center and a shape are randomly selected for each drop. 
 
 <img width="328" alt="drop_generation" src="https://user-images.githubusercontent.com/39035996/112954529-238bc480-9147-11eb-8b14-54120373407e.png">
+
+The proposed raindrops generation method is based on the code from https://github.com/ricky40403/ROLE.
 
 ## Example of image raindrops generation
 
