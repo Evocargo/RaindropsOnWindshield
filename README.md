@@ -7,7 +7,7 @@ The images for the dataset were captured by a camera attached to the vehicle dur
 
 The dataset represents sequences of video frames containing 8190 images of which 3390 contain raindrops. Images were labeled by outlining artifacts with polygons. Labeling results are stored in JSON format. In addition, binary masks were generated from this markup, which are also presented in the dataset for convenience. White color denotes an artifact area.
 
-Details have been published in: [arxiv preprint](https://arxiv.org/abs/2104.05078).
+Details have been published in [arxiv preprint](https://arxiv.org/abs/2104.05078).
 
 [Dataset]()
  * [images]()
