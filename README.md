@@ -9,16 +9,16 @@ The dataset represents sequences of video frames containing 8190 images of which
 
 Details have been published in [arxiv preprint](https://arxiv.org/abs/2104.05078).
 
-[Dataset]()
- * [images]()
+Dataset
+ * images
    * seq1
    * seq2
    * ...
- * [masks]()
+ * masks
    * seq1
    * seq2
    * ...
- * [json]()
+ * json
 
 <img width="455" alt="Снимок экрана 2021-03-30 в 10 31 45" src="https://user-images.githubusercontent.com/39035996/112950672-34d2d200-9143-11eb-88ea-6ac459e1df61.png">
 
