@@ -8,7 +8,12 @@ The images for the dataset were captured by a camera attached to the vehicle dur
 The dataset represents sequences of video frames containing 8190 images of which 3390 contain raindrops. Images were labeled by outlining artifacts with polygons. Labeling results are stored in JSON format. In addition, binary masks were generated from this markup, which are also presented in the dataset for convenience. White color denotes an artifact area.
 
 Details have been published in [arxiv preprint](https://arxiv.org/abs/2104.05078).
+If you use this dataset, please, cite the appropriate paper.
 
+
+<img width="455" alt="Снимок экрана 2021-03-30 в 10 31 45" src="https://user-images.githubusercontent.com/39035996/112950672-34d2d200-9143-11eb-88ea-6ac459e1df61.png">
+
+The dataset is organized as follows:
 Dataset
  * images
    * seq1
@@ -19,8 +24,6 @@ Dataset
    * seq2
    * ...
  * json
-
-<img width="455" alt="Снимок экрана 2021-03-30 в 10 31 45" src="https://user-images.githubusercontent.com/39035996/112950672-34d2d200-9143-11eb-88ea-6ac459e1df61.png">
 
 ## Download
 [Raindrops On Windshield Dataset](https://zenodo.org/record/4680442#.YH7agakzZO9) is avalilable on zenodo.org. It can be downloaded with the following commands 
