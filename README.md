@@ -1,14 +1,6 @@
 # RaindropsOnWindshield
 We present a publicly available set of images for training and assessing vision algorithms' performance for different tasks of raindrops detection on either camera lens or windshield. At the moment, it contains 8190 images, of which 3390 contain raindrops.
 
-## Dataset description
-
-The images for the dataset were captured by a camera attached to the vehicle during its movement. The vehicle's movement took place in urban areas and highways, making the dataset ideal for training and assessing vision algorithms for autonomous vehicle camera lens pollution detection. 
-
-The dataset represents sequences of video frames containing 8190 images of which 3390 contain raindrops. Images were labeled by outlining artifacts with polygons. Labeling results are stored in JSON format. In addition, binary masks were generated from this markup, which are also presented in the dataset for convenience. White color denotes an artifact area.
-
-Details have been published in [arxiv preprint](https://arxiv.org/abs/2104.05078).
-
 If you use this dataset, please, cite the appropriate paper.
 
 <pre>
@@ -23,10 +15,18 @@ If you use this dataset, please, cite the appropriate paper.
   </code>
 </pre>
 
+## Dataset description
+
+The images for the dataset were captured by a camera attached to the vehicle during its movement. The vehicle's movement took place in urban areas and highways, making the dataset ideal for training and assessing vision algorithms for autonomous vehicle camera lens pollution detection. 
+
+The dataset represents sequences of video frames containing 8190 images of which 3390 contain raindrops. Images were labeled by outlining artifacts with polygons. Labeling results are stored in JSON format. In addition, binary masks were generated from this markup, which are also presented in the dataset for convenience. White color denotes an artifact area.
+
+Details have been published in [arxiv preprint](https://arxiv.org/abs/2104.05078).
+
 <img width="455" alt="Снимок экрана 2021-03-30 в 10 31 45" src="https://user-images.githubusercontent.com/39035996/112950672-34d2d200-9143-11eb-88ea-6ac459e1df61.png">
 
 The dataset is organized as follows:
-Dataset
+
  * images
    * seq1
    * seq2
