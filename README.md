@@ -1,7 +1,7 @@
 # RaindropsOnWindshield
 We present a publicly available set of images for training and assessing vision algorithms' performance for different tasks of raindrops detection on either camera lens or windshield. At the moment, it contains 8190 images, of which 3390 contain raindrops.
 
-If you use this dataset, please, cite the appropriate paper.
+If you use this dataset, please, cite the appropriate paper:
 
 <pre>
   <code>
@@ -38,7 +38,7 @@ The dataset is organized as follows:
  * json
 
 ## Download
-[Raindrops On Windshield Dataset](https://zenodo.org/record/4680442#.YH7agakzZO9) is avalilable on zenodo.org. It can be downloaded with the following commands 
+[Raindrops On Windshield Dataset](https://zenodo.org/record/4680442#.YH7agakzZO9) is avalilable on zenodo.org. It can be downloaded with the following commands:
 <pre>
   <code>
 pip install zenodo-get
