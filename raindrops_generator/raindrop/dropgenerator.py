@@ -45,6 +45,7 @@ def CheckCollision(DropList):
 				tmp_devide = drop.getRadius()
 				final_R = drop.getRadius()  * drop.getRadius()
 				for col_id in collision_list:
+					col_id = int(col_id)
 					Checked_list.append(col_id)
 					# list start from 0
 					final_x += DropList[list_len - col_id].getRadius() * DropList[list_len - col_id].getCenters()[0]
@@ -98,7 +99,7 @@ def generate_label(h, w, cfg):
 	label_map = np.zeros([h, w])
 	collisionNum = len(listRainDrops)
 	listFinalDrops = list(listRainDrops)
-	loop = 0    
+	loop = 0
 	while collisionNum > 0:
 		loop = loop + 1
 		listFinalDrops = list(listFinalDrops)
@@ -141,7 +142,7 @@ def generate_label(h, w, cfg):
     
 
 
-def generateDrops(imagePath, cfg, listFinalDrops, label_map):
+def generateDrops(imagePath, cfg, listFinalDrops):
 	"""
 	Generate raindrops on the image
 	:param imagePath: path to the image on which you want to generate drops
@@ -161,33 +162,7 @@ def generateDrops(imagePath, cfg, listFinalDrops, label_map):
 	B = cfg["B"]
 	C = cfg["C"]
 	D = cfg["D"]
-	mask = np.zeros_like(bg_img)
-	for drop in listFinalDrops:
-		if (drop.shape == 0):
-			cv2.circle(mask, drop.center, drop.radius, (255, 255, 255), -1)
-		if (drop.shape == 1):
-			cv2.circle(mask, drop.center, drop.radius, (255, 255, 255), -1)
-			cv2.ellipse(mask, drop.center,\
-                    (drop.radius, int(1.3*math.sqrt(3) * drop.radius)), 0, 180, 360, (255, 255, 255), -1)
-            
-	img = Image.fromarray(np.uint8(mask[:,:,0]) , 'L')            
-	for drop in listFinalDrops:    
-		if (drop.shape == 2):
-			img = Image.fromarray(np.uint8(img) , 'L')
-			draw = ImageDraw.Draw(img)
-			ts = [t/100.0 for t in range(101)]
-			xys = [(drop.radius * C[0] - 2*drop.radius + drop.center[0], drop.radius * C[1] - 3*drop.radius + drop.center[1]), (drop.radius * B[0] - 2*drop.radius + drop.center[0], drop.radius * B[1] - 3*drop.radius + drop.center[1]), (drop.radius * D[0] - 2*drop.radius + drop.center[0], drop.radius * D[1] - 3*drop.radius + drop.center[1])]
-			bezier = make_bezier(xys)
-			points = bezier(ts)
 
-			xys = [(drop.radius * C[0] - 2*drop.radius + drop.center[0], drop.radius * C[1] - 3*drop.radius + drop.center[1]), (drop.radius * A[0] - 2*drop.radius + drop.center[0], drop.radius * A[1] - 3*drop.radius + drop.center[1]), (drop.radius * D[0] - 2*drop.radius + drop.center[0], drop.radius * D[1] - 3*drop.radius + drop.center[1])]
-			bezier = make_bezier(xys)
-			points.extend(bezier(ts))
-			draw.polygon(points, fill = 'white')
-			mask = np.array(img)
-        
-	im_mask = Image.fromarray(mask.astype('uint8'))
-    
 	alpha_map = np.zeros_like(label_map).astype(np.float64)
 	
 
@@ -214,7 +189,7 @@ def generateDrops(imagePath, cfg, listFinalDrops, label_map):
 	alpha_map = alpha_map/np.max(alpha_map)*255.0
 
 	PIL_bg_img = Image.open(imagePath)
-	for drop in listFinalDrops:
+	for idx, drop in enumerate(listFinalDrops):
 		(ix, iy) = drop.getCenters()
 		radius = drop.getRadius()		
 		ROIU = iy - 3*radius
@@ -236,7 +211,11 @@ def generateDrops(imagePath, cfg, listFinalDrops, label_map):
 
 
 		tmp_bg = bg_img[ROIU:ROID, ROIL:ROIR,:]
-		drop.updateTexture(tmp_bg)
+		try:
+			drop.updateTexture(tmp_bg)
+		except:
+			del listFinalDrops[idx]
+			continue
 		tmp_alpha_map  = alpha_map[ROIU:ROID, ROIL:ROIR]
 
 		output = drop.getTexture()		
@@ -249,10 +228,38 @@ def generateDrops(imagePath, cfg, listFinalDrops, label_map):
 
 		PIL_bg_img.paste(edge, (ix-2*radius, iy-3*radius), output)
 		PIL_bg_img.paste(output, (ix-2*radius, iy-3*radius), output)
-		
-	
 
-	
+	mask = np.zeros_like(bg_img)
+
+	if len(listFinalDrops)>0:
+		# make circles and elipses
+		for drop in listFinalDrops:
+			if (drop.shape == 0):
+				cv2.circle(mask, drop.center, drop.radius, (255, 255, 255), -1)
+			if (drop.shape == 1):
+				cv2.circle(mask, drop.center, drop.radius, (255, 255, 255), -1)
+				cv2.ellipse(mask, drop.center,\
+						(drop.radius, int(1.3*math.sqrt(3) * drop.radius)), 0, 180, 360, (255, 255, 255), -1)
+				
+		img = Image.fromarray(np.uint8(mask[:,:,0]) , 'L') 
+		# make beziers           
+		for drop in listFinalDrops:    
+			if (drop.shape == 2):
+				img = Image.fromarray(np.uint8(img) , 'L')
+				draw = ImageDraw.Draw(img)
+				ts = [t/100.0 for t in range(101)]
+				xys = [(drop.radius * C[0] - 2*drop.radius + drop.center[0], drop.radius * C[1] - 3*drop.radius + drop.center[1]), (drop.radius * B[0] - 2*drop.radius + drop.center[0], drop.radius * B[1] - 3*drop.radius + drop.center[1]), (drop.radius * D[0] - 2*drop.radius + drop.center[0], drop.radius * D[1] - 3*drop.radius + drop.center[1])]
+				bezier = make_bezier(xys)
+				points = bezier(ts)
+
+				xys = [(drop.radius * C[0] - 2*drop.radius + drop.center[0], drop.radius * C[1] - 3*drop.radius + drop.center[1]), (drop.radius * A[0] - 2*drop.radius + drop.center[0], drop.radius * A[1] - 3*drop.radius + drop.center[1]), (drop.radius * D[0] - 2*drop.radius + drop.center[0], drop.radius * D[1] - 3*drop.radius + drop.center[1])]
+				bezier = make_bezier(xys)
+				points.extend(bezier(ts))
+				draw.polygon(points, fill = 'white')
+				mask = np.array(img)
+			
+	im_mask = Image.fromarray(mask.astype('uint8'))	
+
 	if ifReturnLabel:
 		output_label = np.array(alpha_map)
 		output_label.flags.writeable = True

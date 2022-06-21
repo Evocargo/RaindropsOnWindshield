@@ -61,6 +61,7 @@ class Raindrop():
 		self.col_with = []
 		self.center = centerxy
 		self.radius = radius
+		self.blur_coeff = max(int(self.radius/3), 1)
 		self.shape = shape            
 		self.type = "default"
         # label map's WxH = 4*R , 5*R
@@ -76,7 +77,7 @@ class Raindrop():
 		self.ifcol = col
 		self.col_with = col_with
 
-	def updateTexture(self, bg):		
+	def updateTexture(self, bg): 	
 		fg = pyblur.GaussianBlur(Image.fromarray(np.uint8(bg)), 5)
 		fg = np.asarray(fg)
 		# add fish eye effect to simulate the background
@@ -107,7 +108,7 @@ class Raindrop():
 		"""         
 		if (self.shape == 0):    
 			cv2.circle(self.labelmap, (self.radius * 2, self.radius * 3), int(self.radius), 128, -1)
-			self.alphamap = pyblur.GaussianBlur(Image.fromarray(np.uint8(self.labelmap)), 50)        
+			self.alphamap = pyblur.GaussianBlur(Image.fromarray(np.uint8(self.labelmap)), self.blur_coeff)  
 			self.alphamap = np.asarray(self.alphamap).astype(np.float)
 			self.alphamap = self.alphamap/np.max(self.alphamap)*255.0
 			# set label map
@@ -117,7 +118,7 @@ class Raindrop():
 			cv2.circle(self.labelmap, (self.radius * 2, self.radius * 3), int(self.radius), 128, -1)
 			cv2.ellipse(self.labelmap, (self.radius * 2, self.radius * 3), (self.radius, int(1.3*math.sqrt(3) * self.radius)), 0, 180, 360, 128, -1)
 
-			self.alphamap = pyblur.GaussianBlur(Image.fromarray(np.uint8(self.labelmap)), 50)        
+			self.alphamap = pyblur.GaussianBlur(Image.fromarray(np.uint8(self.labelmap)), self.blur_coeff)        
 			self.alphamap = np.asarray(self.alphamap).astype(np.float)
 			self.alphamap = self.alphamap/np.max(self.alphamap)*255.0
 			# set label map
@@ -140,7 +141,7 @@ class Raindrop():
 			points.extend(bezier(ts))
 			draw.polygon(points, fill = 'gray')           
 
-			self.alphamap = pyblur.GaussianBlur(img, 50)       
+			self.alphamap = pyblur.GaussianBlur(img, self.blur_coeff)       
 			self.alphamap = np.asarray(self.alphamap).astype(np.float)
 			self.alphamap = self.alphamap/np.max(self.alphamap)*255.0
 			# set label map
